@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Authentication System</title>
+    <style>
+        /* Reset some default styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: #f5f5f5;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .auth-container {
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 400px;
+            overflow: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .auth-header {
+            background-color: #4285f4;
+            color: white;
+            padding: 20px;
+            text-align: center;
+        }
+
+        .auth-header h1 {
+            font-size: 24px;
+            margin-bottom: 5px;
+        }
+
+        .auth-tabs {
+            display: flex;
+            border-bottom: 1px solid #e0e0e0;
+        }
+
+        .auth-tab {
+            flex: 1;
+            text-align: center;
+            padding: 15px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: 500;
+        }
+
+        .auth-tab.active {
+            border-bottom: 3px solid #4285f4;
+            color: #4285f4;
+        }
+
+        .auth-form {
+            padding: 20px;
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: 500;
+            color: #333;
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 16px;
+            transition: border 0.3s ease;
+        }
+
+        .form-group input:focus {
+            border-color: #4285f4;
+            outline: none;
+        }
+
+        .forgot-password {
+            text-align: right;
+            margin: 10px 0;
+        }
+
+        .forgot-password a {
+            color: #4285f4;
+            text-decoration: none;
+            font-size: 14px;
+        }
+
+        .forgot-password a:hover {
+            text-decoration: underline;
+        }
+
+        .btn {
+            background-color: #4285f4;
+            color: white;
+            border: none;
+            padding: 12px;
+            width: 100%;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: 500;
+            transition: background-color 0.3s ease;
+        }
+
+        .btn:hover {
+            background-color: #3367d6;
+        }
+
+        .auth-footer {
+            text-align: center;
+            padding: 15px;
+            border-top: 1px solid #e0e0e0;
+            color: #666;
+            font-size: 14px;
+        }
+
+        .auth-footer a {
+            color: #4285f4;
+            text-decoration: none;
+        }
+
+        .auth-footer a:hover {
+            text-decoration: underline;
+        }
+
+        .alert {
+            padding: 10px;
+            margin: 15px 0;
+            border-radius: 5px;
+            text-align: center;
+            font-weight: 500;
+            display: none;
+        }
+
+        .alert-error {
+            background-color: #ffebee;
+            color: #d32f2f;
+        }
+
+        .alert-success {
+            background-color: #e8f5e9;
+            color: #388e3c;
+        }
+
+        #signup-form {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="auth-container">
+        <div class="auth-header">
+            <h1>Welcome</h1>
+            <p>Please login or create an account</p>
+        </div>
+        <div class="auth-tabs">
+            <div class="auth-tab active" id="login-tab">Login</div>
+            <div class="auth-tab" id="signup-tab">Sign Up</div>
+        </div>
+        <div class="auth-form">
+            <!-- Login Form -->
+            <form id="login-form">
+                <div class="alert alert-error" id="login-error"></div>
+                <div class="alert alert-success" id="login-success"></div>
+                <div class="form-group">
+                    <label for="login-email">Email</label>
+                    <input type="email" id="login-email" placeholder="Enter your email" required>
+                </div>
+                <div class="form-group">
+                    <label for="login-password">Password</label>
+                    <input type="password" id="login-password" placeholder="Enter your password" required>
+                </div>
+                <div class="forgot-password">
+                    <a href="#">Forgot password?</a>
+                </div>
+                <button type="submit" class="btn">Login</button>
+            </form>
+            
+            <!-- Sign Up Form -->
+            <form id="signup-form">
+                <div class="alert alert-error" id="signup-error"></div>
+                <div class="alert alert-success" id="signup-success"></div>
+                <div class="form-group">
+                    <label for="signup-name">Full Name</label>
+                    <input type="text" id="signup-name" placeholder="Enter your full name" required>
+                </div>
+                <div class="form-group">
+                    <label for="signup-email">Email</label>
+                    <input type="email" id="signup-email" placeholder="Enter your email" required>
+                </div>
+                <div class="form-group">
+                    <label for="signup-password">Password</label>
+                    <input type="password" id="signup-password" placeholder="Create a password" required>
+                </div>
+                <div class="form-group">
+                    <label for="signup-confirm-password">Confirm Password</label>
+                    <input type="password" id="signup-confirm-password" placeholder="Confirm your password" required>
+                </div>
+                <button type="submit" class="btn">Create Account</button>
+            </form>
+        </div>
+        <div class="auth-footer">
+            <p>By continuing, you agree to our <a href="#">Terms of Service</a> and <a href="#">Privacy Policy</a></p>
+        </div>
+    </div>
+
+    <!-- Important: Link to the authentication JavaScript file -->
+    <script src="/js/auth.js"></script>
+</body>
+</html>
